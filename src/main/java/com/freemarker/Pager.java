@@ -3,7 +3,8 @@ package com.freemarker;
 import java.util.List;
 
 /**
- * 分页 Created by huangyuan on 16-4-28.
+ * 分页 
+ * Created by huangyuan on 16-4-28.
  */
 public class Pager<E> {
 	/**
