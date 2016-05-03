@@ -12,6 +12,7 @@ public abstract class AbstractRepository<T> implements BaseRepository<T> {
 	public MongoTemplate mongoTemplate;
 	
 	public AbstractRepository(){
+		System.out.println(MongoTemplateSingleton.instance);
 		mongoTemplate = MongoTemplateSingleton.instance.getMongoTemplate();
 	}
 	
