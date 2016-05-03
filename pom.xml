@@ -47,15 +47,15 @@
         <!-- <dependency> <groupId>org.jboss.logging</groupId> <artifactId>jboss-logging</artifactId>
             <version>3.3.0.Final</version> </dependency> -->
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
-            <version>1.2.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.0.4</version>
-        </dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.9.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.2.2</version>
+		</dependency>
 
         <!-- 基础库 -->
         <!-- apache基础组件 -->
@@ -357,7 +357,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>BBS</finalName>
+        <finalName>freemarker</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
