@@ -10,16 +10,20 @@
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	<!-- 属性文件位置 -->
-	<bean id="annotationPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:mongodb.properties</value>
-				<value>classpath:log4j.properties</value>
-			</list>
-		</property>
-	</bean>
-	<!-- 将配置文件读取到容器中，交给Spring管理 -->  
+	<!-- 将多个配置文件位置放到列表中 -->  
+    <bean id="propertyResources" class="java.util.ArrayList">  
+        <constructor-arg>  
+            <list>  
+              <!-- 这里支持多种寻址方式：classpath和file -->  
+              <value>classpath*:/mongodb.properties</value>
+              <!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->  
+              <value>classpath*:/log4j.properties</value>  
+            </list>  
+        </constructor-arg>  
+    </bean>  
+      
+    <bean class="com.mongo.spring.SpringContextHolder" lazy-init="false"/>
+    <!-- 将配置文件读取到容器中，交给Spring管理 -->  
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
         <property name="locations" ref="propertyResources" />  
     </bean>  
@@ -45,20 +49,24 @@
 		</property>
 	</bean>
 
-
 	<!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
-	<mongo:mongo id="mongo" replica-set="${mongo.hostport}">
-		<!-- 一些连接属性的设置 -->
-		<mongo:options connections-per-host="${mongo.connectionsPerHost}"
+	<mongo:mongo-client replica-set="${mongo.hostport}">
+		<mongo:client-options
+			connections-per-host="${mongo.connectionsPerHost}"
+			description="连接数据库"
+			connect-timeout="${mongo.connectTimeout}"
+			max-wait-time="${mongo.maxWaitTime}"
 			threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
-			connect-timeout="${mongo.connectTimeout}" max-wait-time="${mongo.maxWaitTime}"
-			auto-connect-retry="${mongo.autoConnectRetry}" socket-keep-alive="${mongo.socketKeepAlive}"
-			socket-timeout="${mongo.socketTimeout}" slave-ok="${mongo.slaveOk}"
-			write-number="1" write-timeout="0" write-fsync="true" />
-	</mongo:mongo>
+			socket-keep-alive="${mongo.socketKeepAlive}"
+			socket-timeout="${mongo.socketTimeout}"
+		/>
+	</mongo:mongo-client>
+		
 	<mongo:db-factory dbname="database" mongo-ref="mongo" />
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg name="databaseName" value="blog" />
 	</bean>
+	
+	<bean class="com.mongo.orm.factory.MongoTemplateSingleton" init-method="init" lazy-init="false" />
 </beans>
