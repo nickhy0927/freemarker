@@ -22,7 +22,7 @@
         </constructor-arg>  
     </bean>  
       
-    <bean class="com.mongo.spring.SpringContextHolder" lazy-init="false"/>
+    <bean class="com.freemarker.mongo.spring.SpringContextHolder" lazy-init="false"/>
     <!-- 将配置文件读取到容器中，交给Spring管理 -->  
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
         <property name="locations" ref="propertyResources" />  
@@ -68,5 +68,5 @@
 		<constructor-arg name="databaseName" value="blog" />
 	</bean>
 	
-	<bean class="com.mongo.orm.factory.MongoTemplateSingleton" init-method="init" lazy-init="false" />
+	<bean class="com.freemarker.mongo.orm.factory.MongoTemplateSingleton" init-method="init" lazy-init="false" />
 </beans>
