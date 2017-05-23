@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.freemarker.platform.dao.UserDao;
-import com.freemarker.platform.entity.User;
+import com.platform.user.dao.UserDao;
+import com.platform.user.entity.User;
 
 /**
  * Created by huangyuan on 16-4-28.
